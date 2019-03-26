@@ -17,7 +17,6 @@ client.connect((err) => {
         return console.error("Connection Error", err);
     }
 
-
     function getName(name) {
         client.query(`SELECT id, first_name, last_name, to_char(birthdate, 'yyyy-MM-dd') AS birthdate FROM famous_people WHERE first_name='${name}'`, [], function (err, results) {
             console.log(`Found ${results.rows.length} person(s) by the name ${name}`)
