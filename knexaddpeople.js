@@ -16,7 +16,7 @@ const knex = require('knex')({
 const moment = require('moment');
 
 function addName(moniker, surname, dob) {
-    knex.insert([{ first_name: moniker, last_name: surname, birthdate: dob }]).into('famous_people').then(printTable).then(close());
+    knex.insert([{ first_name: moniker, last_name: surname, birthdate: dob }]).into('famous_people').then(printTable).then(close()).catch(err => console.log(err.message));
 }
 
 addName(moniker, surname, dob);
@@ -25,16 +25,16 @@ function printTable() {
     knex.select().from('famous_people').then(function (resp) {
         resp.forEach(function (row) {
             let m = moment(row.birthdate);
-            console.log(`${row.id}:${row.first_name} ${row.last_name} born ${m.format('MMMM do YYYY')}`);
+            console.log(`${row.id}:${row.first_name} ${row.last_name} born ${m.format('MMMM DD YYYY')}`);
         })
     })
 }
 
 function close() {
-    setTimeout(function () { process.exit(); }, 2000);
+    setTimeout(function () { process.exit(); }, 1000);
 }
 
-
+console.log('loading...')
 //this gets name from comd line and prints stuff
 // function getName(name) {
 //     knex.select().from('famous_people').where('first_name', `${ name }`).then(function (resp) {
